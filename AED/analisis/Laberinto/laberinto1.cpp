@@ -1,1 +1,110 @@
+#include <iostream>
+using namespace std;
 
+void print(int(* A)[10], int fil ){
+    for(int(* i)[10]=A    ; i < A+fil  ; i++){
+        for(  int* j = *i  ; j < *(i+1) ; j++){
+            if(*j==-10){
+               cout<<"X";
+            }
+            else{
+               cout<<" ";
+            }
+           
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+} 
+
+
+void LAB(int(* A)[10], int fil, DIR A, DIR B ){
+    int(* i)[fil]= DIR A;
+    
+    if( *j != 10 ){
+    if(  (i-1) >= A ){
+        if( *( *(i-1) + (j-*i+0) ) == 0 )                      (*j)++;                       //      o  
+        
+        if( *( j-1 ) ==9   && ( j-1 ) >= *i )                      (*j)++;                                        
+        if( *( j+1 ) ==9   && ( j+1 ) < *(i+1) )                   (*j)++;                                        // o         o
+        if(  (i+1) < A+fil+1 ){
+        if( *( *(i+1) + (j-*i+0) ) == 9)                       (*j)++;                                             //      o 
+    }
+}
+
+void ENCONTRAR(int(* A)[10],  ){
+    int(* i)[fil]= DIR A;
+    
+    if( A ){
+        DIR A = &A
+    if(  B ){
+               DIR B = &B                                     //      o 
+              
+    }
+        
+   
+}
+
+
+
+
+
+
+
+
+void solucion(int(* A)[10], int fil ){             //   100 101 102 103
+    for(int(* i)[10]=A    ; i < A+fil  ; i++){        //   200 201 202 203
+        for(  int* j = *i  ; j < *(i+1) ; j++){        //   300 301 302 303 //   400 401 402 403 *( *(i-1) + (j-*i-1) )
+
+          if( *j != 10 ){
+            if(  (i-1) >= A ){
+                if( *( *(i-1) + (j-*i+0) ) == 0 )                      (*j)++;                       //      o  
+            }
+            if( *( j-1 ) ==9   && ( j-1 ) >= *i )                      (*j)++;                                        
+            if( *( j+1 ) ==9   && ( j+1 ) < *(i+1) )                   (*j)++;                                        // o         o
+
+            if(  (i+1) < A+fil+1 ){
+                if( *( *(i+1) + (j-*i+0) ) == 9)                       (*j)++;                                             //      o 
+              
+            }
+
+           //cout<< *j <<" ";*
+          }
+        }
+  
+    }
+}
+
+
+int main()
+{
+    cout<<"buscaminas\n";
+    int fil,col;
+    int** p;
+    
+    fil=10;
+    col=10;
+    
+    int A[10][10]=   {{0,9,9,9,9,9,9,9,9,0},  //1
+                      {0,0,0,0,0,0,0,0,0,0},  //2
+                      {0,0,0,0,0,0,0,0,9,0},  //3
+                      {0,9,0,0,9,0,0,0,9,0},  //4
+                      {9,9,0,0,0,0,0,0,9,0},  //1
+                      {9,9,0,0,0,0,0,0,9,0},  //2
+                      {9,9,9,9,9,0,0,9,9,9},  //3
+                      {9,9,9,9,9,9,0,9,9,9},  //8
+                      {9,9,9,9,9,9,9,9,9,0},  //9
+                      {9,9,9,9,9,9,9,9,9,0},  //10
+                     };
+    // Dibujar matriz
+    print(A,fil); 
+
+    
+    // Dibujar matriz 
+
+    cout<<"Solucion:"<<endl;
+    solucion(A, 10 );     
+    print(A,10);
+
+    return 0;
+}
