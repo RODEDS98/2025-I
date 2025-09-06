@@ -33,16 +33,33 @@ int contar_palabras(char (&A)[fil][col],char* palabra){
         for( char* j = *i ; j < *i + columna ; j++ ){
             
             if( (*j == *palabra) ){                                           // 1 2 3 4 5 6 78910
-                int m=0;                                                      // p p p p p p p000
+                int m=0;
+                char* tmp_ptr = j;
                 if(  (*i + columna-1) - j +1 >= palabra_size ){               
-                    char* p_ptr = palabra;
-                        for( ; *p_ptr ; p_ptr++ ){
-                            if( *p_ptr != *(j+m) ) {break;}
-                            m++;               
-                        }
+                    char* p_ptr = palabra;                             // p p p p p p p000
+                    int n=0;
+                    for( ; *p_ptr ; p_ptr++ ){
+                        if( *p_ptr != *(j+m) ) break;
+                        if( *p_ptr == *(palabra) && n<2 ) { 
+                            //cout<<"c ";
+                            n++; 
+                            tmp_ptr = j+m;
+                            //cout<< tmp_ptr-*i+1 <<" . "; 
+                        }  //Solo guarda hasta la segunda vez q encuentre la primera letra de la palabra
                         
-                        if( palabra_size == m ) {contador++;cout<<endl<<"("<< (i-A) + 1 <<","<< (j-*i)+1 <<")"<<endl;}   //contador++;
-                        m--;  
+                        m++;
+                    }
+                        
+                    if( palabra_size == m ) {
+                        {contador++;cout<<endl<<"("<< (i-A) + 1 <<","<< (j-*i)+1 <<")"<<endl;}   //contador++;   
+                        //cout<<endl<<"("<< (i-A) + 1 <<","<< (j-*i)+1 <<")"<<endl;
+                        
+                    }   //contador++;
+                        
+                    if(n==2){
+                        tmp_ptr--;
+                    }
+                    m--;
                 }                                                                           // p
                                                                                             // p
                 if ( ( A + fila-1 ) - i + 1 >= palabra_size ){                              // p 
@@ -76,10 +93,10 @@ int contar_palabras(char (&A)[fil][col],char* palabra){
                             if( *q != *( *(i- piv_up) + (j-*i) )   ) break;                 // p                  
                             piv_up++;                                                       // p
                         }                                                                   // p
-                        if( palabra_size == piv_up ){contador++;cout<<endl<<"("<< (i-A) + 1 <<","<< (j-*i)+1 <<")"<<endl;}   //contador++; 
+                        if( palabra_size == piv_up ) {contador++;cout<<endl<<"("<< (i-A) + 1 <<","<< (j-*i)+1 <<")"<<endl;}   //contador++; 
                 }   
                 
-                j=j+m;
+                j=tmp_ptr;
             }
         }   
     }
@@ -103,7 +120,7 @@ int main()
                          {'N','I','I','A','T','I','T','A','P','A'},
                          {'P','S','S','N','T','T','T','P','A','P'}  };
                          
-    char palabra[] = "PATA";
+    char palabra[] = "ATAP";
 
     print(A);
     int n = contar_palabras(A,palabra);
