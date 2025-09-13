@@ -135,12 +135,28 @@ int main()
     // */                     
                          
                          
-    char palabra[] = "ATAP";
+    //char palabra[] = "ATAP";
+    char palabra_1[] = "PATAN";
+    char palabra_2[] = "PATATA";
+    char palabra_3[] = "PATO";
+    char palabra_4[] = "TAPA";
+    char palabra_5[] = "PATA";
 
     print(A);
-    int n = contar_palabras(A,palabra);
-    cout<<endl<<"La palabra "<< palabra <<" aparece "<<n<< " veces";
+    int n_1 = contar_palabras(A,palabra_1);
+    cout<<endl<<"La palabra "<< palabra_1 <<" aparece "<<n_1<< " veces";
+    
+    int n_5 = contar_palabras(A,palabra_5);
+    cout<<endl<<"La palabra "<< palabra_2 <<" aparece "<<n_5<< " veces";
+    
 
-
+    int n_2 = contar_palabras(A,palabra_2);
+    cout<<endl<<"La palabra "<< palabra_2 <<" aparece "<<n_2<< " veces";
+    
+    int n_3 = contar_palabras(A,palabra_3);
+    cout<<endl<<"La palabra "<< palabra_3 <<" aparece "<<n_3<< " veces";
+    
+    int n_4 = contar_palabras(A,palabra_4);
+    cout<<endl<<"La palabra "<< palabra_4 <<" aparece "<<n_4<< " veces";
   
 }
