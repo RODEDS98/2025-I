@@ -9,7 +9,7 @@ void reversa(int (&A)[fil][col],int(* &dir_i)[col] ,int* &dir_j,int marca ){
     int(* i)[col]= dir_i; 
     int* j = dir_j;
     while( true ) {    // marca == marca+1
-            cout<<"i_r" <<i<<"j_r" <<j<<endl;
+            //cout<<"i_r" <<i<<"j_r" <<j<<endl;
             print(A,fil); 
 
             if( j+1  < *(i+1) && *(j+1) == marca ){ // derecha
@@ -61,20 +61,26 @@ void print(int(* A)[10], int fil ){
     for(int(* i)[10]=A    ; i < A+fil  ; i++){
         for(  int* j = *i  ; j < *(i+1) ; j++){
             if(*j==-1){
-               cout<<"X ";
+               cout<<" X";
             }
             else if(*j<-1){
-               cout<<"  ";
+               cout<<" ";
             }
             else if(*j==100){
-               cout<<"A ";
+               cout<<" A";
             }
             else if(*j==200){
-               cout<<"B ";
+               cout<<" B";
             }
             
             else{
-               cout<<"  "<<*j;
+                if(*j < 9){
+                   cout<<"  "<<*j<<"  "; 
+                }
+                else{
+                    cout<<*j;
+                }
+               
             }
            
         }
@@ -86,6 +92,34 @@ void print2(int(* A)[10], int fil ){
     for(int(* i)[10]=A    ; i < A+fil  ; i++){
         for(  int* j = *i  ; j < *(i+1) ; j++){
             cout<< j<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+} 
+
+void print3(int(* A)[10], int fil ){
+    for(int(* i)[10]=A    ; i < A+fil  ; i++){
+        for(  int* j = *i  ; j < *(i+1) ; j++){
+            if(*j==-1){
+               cout<<" X";
+            }
+            else if(*j<-2 || *j==0){
+               cout<<"  ";
+            }
+            else if(*j==100){
+               cout<<" A";
+            }
+            else if(*j==200){
+               cout<<" B";
+            }
+            
+            else{
+                if(*j > 0)
+                   cout<<" *";
+               
+            }
+           
         }
         cout<<endl;
     }
@@ -135,7 +169,7 @@ void solucion(int(& A)[fil][col], int* dir_A , int* dir_B ){             //   10
     int(* i)[col]= A + (dir_A - *A)/col;
     int* j = *i + (dir_A - *i);
     int* p = dir_A;
-    int marca=1;
+    int marca=2;
     int iteraciones=0;
     //cout<<*A << " " <<(dir_A-*A) << " s " <<(dir_A-*A)/col <<endl;
     //cout<<i <<endl;
@@ -249,7 +283,7 @@ int main()
     int* dir_B = nullptr;
     
     
-    int A[10][10]=  {{0,-1,0, 100, 0,0, 0, 0, 0,-1},  //1
+    int A[10][10]=  {{100,-1,0, 0, 0,0, 0, 0, 0,-1},  //1
                       {0,-1,0, 0, 0,0, -1,-1, 0,-1},  //2
                       {0,-1,0,-1,-1,0,-1, -1,-1,-1},  //3
                       {0,-1,0,-1, 0,0,-1,  0, 0, 0},  //4
@@ -273,5 +307,7 @@ int main()
     //cout<<"direccion A:"<< dir_A<<endl<<"direccion B:"<< dir_B<<endl;
     cout<<"Solucion:"<<endl;
     solucion(A, dir_A, dir_B );  
+    cout<<"Solucion2:"<<endl;
+    print3(A,fil); 
     return 0;
 }
