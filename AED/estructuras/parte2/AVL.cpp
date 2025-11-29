@@ -29,11 +29,12 @@ public:
     int MaxNodeHeight(CAVLNode* n);
     int MaxHeight();
     void balanceo(std::stack<CAVLNode**> & estructura);
-
-private:
     bool Find(int x, CAVLNode**& p , std::stack<CAVLNode**> & estructura);
     CAVLNode** Rep(CAVLNode** p);
     void InOrder(CAVLNode* n);
+
+private:
+
     CAVLNode* m_root;
 };
 
@@ -51,6 +52,7 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
     CAVLNode** A_ptrx2;
     //CAVLNode** B_ptr;
     CAVLNode** C_ptrx2;
+    
     //EL FOR ELIMINARA EL TOP DEL STACK
     for( ; !estructura.empty() ; estructura.pop() ){
         int alt_izq=0;
@@ -67,10 +69,12 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
             cout<< (*(estructura.top()))->value << " for_1 altura [1] " <<endl;
         }
         // SE INCREMENTAN LAS ALTURAS    
-        int altura_max;
-        if(alt_der == alt_izq && alt_izq==0 && !((*(estructura.top()))->nodes[0]) ) return;
+        int altura_nodo;
+        //if(alt_der == alt_izq && alt_izq==0 && !((*(estructura.top()))->nodes[0]) ) return;
+        
         if(alt_der >= alt_izq ){
             (*(estructura.top()))->altura = alt_der+1;
+          
         }
         else{
             (*(estructura.top()))->altura = alt_izq+1;
@@ -93,7 +97,7 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
     cout<<"         NO BREAK  " <<endl;
     
     if (A==2){
-        cout<<"         CASO A  " <<endl;    
+        cout<<"         CASO R X  " <<endl;    
         A_ptrx2 = estructura.top() ;
         int alt_der = 0;
         int alt_izq = 0;
@@ -101,33 +105,46 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
         if ((*A_ptrx2)->nodes[1]->nodes[1]){
             alt_der = (*A_ptrx2)->nodes[1]->nodes[1]->altura;
         }
-        if ((*A_ptrx2)->nodes[1]->no|des[0]){
+        if ((*A_ptrx2)->nodes[1]->nodes[0]){
             alt_izq = (*A_ptrx2)->nodes[1]->nodes[0]->altura;
         }
         
         int dif = alt_der - alt_izq;
         
         if ( dif == 1 ){    //CASO  RR
-                
+                cout<<"         CASO R R  " <<endl; 
             CAVLNode* tmp_A = *A_ptrx2 ;          //guardamos la dir de A (peso 2)
             
             CAVLNode* B_ptr = (*A_ptrx2)->nodes[1];
-            //CAVLNode* C_ptr = (*A_ptr)->nodes[1];
-
+            CAVLNode* B_bl = B_ptr->nodes[0];   //guardamos bl  , hijo izquierdo de B
+   
             *A_ptrx2 = B_ptr;        // Se apunta a B como sub root
-            CAVLNode* tmp_B_left = B_ptr->nodes[0] ;  //guardamos el hijo izq de B
              
             B_ptr->nodes[0] = tmp_A ;
-            tmp_A->nodes[1] =tmp_B_left ; 
+            tmp_A->nodes[1] = B_bl; 
             cout<<"A = -2 , dif "<<endl;
         }
         else if ( dif == -1 ){  //CASO  LR
-            cout<<"completar"<<endl;
+            cout<<"         CASO L R   " <<endl; 
+            CAVLNode* tmp_A = *A_ptrx2 ;          //guardamos la dir de A (peso 2)
+            CAVLNode* tmp_C = (*A_ptrx2)->nodes[1] ; 
+            CAVLNode* tmp_B = (*A_ptrx2)->nodes[1]->nodes[0] ; 
+            CAVLNode* B_bl  = tmp_B->nodes[0] ; 
+            CAVLNode* B_br  = tmp_B->nodes[1] ; 
+            
+            *A_ptrx2 = tmp_B;
+            
+            tmp_B->nodes[0] = tmp_A;
+            tmp_B->nodes[1] = tmp_C;
+            
+            tmp_A->nodes[1] = B_bl;
+            tmp_C->nodes[0] = B_br;
+            
         } 
     }
 
     else if (C==-2){
-        cout<<"         CASO C  " <<endl;   //CASO  XL
+        cout<<"         CASO XL   " <<endl; 
         C_ptrx2 = estructura.top() ;
         int alt_der = 0;
         int alt_izq = 0;
@@ -140,15 +157,38 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
         
 
         int dif = alt_der - alt_izq;
-        cout<<"         CASO C especificaciones  " <<endl;  
         if (dif == -1 ){  //CASO  LL
-            cout<<"completar"<<endl;
+            cout<<"         CASO L L  " <<endl;                 
+            CAVLNode* tmp_C = *A_ptrx2 ;          //guardamos la dir de A (peso 2)
+            
+            CAVLNode* B_ptr = (*A_ptrx2)->nodes[0];
+            CAVLNode* B_br = B_ptr->nodes[1];   //guardamos bl  , hijo izquierdo de B
+   
+            *A_ptrx2 = B_ptr;        // Se apunta a B como sub root
+             
+            B_ptr->nodes[1] = tmp_C;
+            tmp_C->nodes[0] = B_br; 
+            cout<<"A = -2 , dif "<<endl;
         }
+        
         else if (dif == 1 ){   //CASO  RL
-            cout<<"completar"<<endl;
+        cout<<"         CASO R L   " <<endl; 
+            CAVLNode* tmp_C = *A_ptrx2;          //guardamos la dir de A (peso 2)
+            CAVLNode* tmp_A = (*A_ptrx2)->nodes[0]; 
+            CAVLNode* tmp_B = (*A_ptrx2)->nodes[0]->nodes[1]; 
+            CAVLNode* B_bl  = tmp_B->nodes[0] ; 
+            CAVLNode* B_br  = tmp_B->nodes[1] ; 
+            
+            *A_ptrx2 = tmp_B;
+            
+            tmp_B->nodes[0] = tmp_A;
+            tmp_B->nodes[1] = tmp_C;
+            
+            tmp_A->nodes[1] = B_bl;
+            tmp_C->nodes[0] = B_br;
         }   
     }
-
+    cout<<"         FIN CASOS  " <<endl; 
 //  (REPETIDO ) SEGUIR EL CAMINO DEL STACK QUE AUN TIENE ELEMENTOS:
     
         //EL FOR ELIMINARA EL TOP DEL STACK
@@ -193,14 +233,14 @@ bool CAVLTree::Insert(int x)
 {
     std::stack<CAVLNode**> pila_nodos; 
     CAVLNode** p;
-    cout<<"antes find"<<endl;
+                                                          cout<<"antes find"<<endl;
     if ( Find(x,p,pila_nodos) ) return 0;
-    cout<<"despues find"<<endl;
-    // balanceo
+                                                          cout<<"despues find"<<endl;
+                                                                // balanceo
     *p = new CAVLNode(x);
-    cout<<"inserta el nodo"<<endl;
+                                                           cout<<"inserta el nodo"<<endl;
     balanceo(pila_nodos);
-    cout<<"-- termina balanceo:   "<<  x <<endl;
+                                                            cout<<"-- termina balanceo:   "<<  x <<endl;
     
     return 0;
 }
