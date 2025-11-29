@@ -32,6 +32,9 @@ public:
     bool Find(int x, CAVLNode**& p , std::stack<CAVLNode**> & estructura);
     CAVLNode** Rep(CAVLNode** p);
     void InOrder(CAVLNode* n);
+    CAVLNode* get_root(){
+        return m_root;
+    }
 
 private:
 
@@ -74,7 +77,6 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
         
         if(alt_der >= alt_izq ){
             (*(estructura.top()))->altura = alt_der+1;
-          
         }
         else{
             (*(estructura.top()))->altura = alt_izq+1;
@@ -84,9 +86,11 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
         
         if( alt_der-alt_izq == -2 ){
             C= -2;
+            C_ptrx2 = estructura.top();
             break;    
         } 
         if( alt_der-alt_izq == 2){
+            A_ptrx2 = estructura.top();
             A=2;
             break; 
         }
@@ -98,7 +102,7 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
     
     if (A==2){
         cout<<"         CASO R X  " <<endl;    
-        A_ptrx2 = estructura.top() ;
+        //A_ptrx2 = estructura.top() ;
         int alt_der = 0;
         int alt_izq = 0;
         
@@ -145,7 +149,7 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
 
     else if (C==-2){
         cout<<"         CASO XL   " <<endl; 
-        C_ptrx2 = estructura.top() ;
+        //C_ptrx2 = estructura.top() ;
         int alt_der = 0;
         int alt_izq = 0;
         if ((*C_ptrx2)->nodes[0]->nodes[1]){
@@ -159,12 +163,12 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
         int dif = alt_der - alt_izq;
         if (dif == -1 ){  //CASO  LL
             cout<<"         CASO L L  " <<endl;                 
-            CAVLNode* tmp_C = *A_ptrx2 ;          //guardamos la dir de A (peso 2)
+            CAVLNode* tmp_C = *C_ptrx2 ;          //guardamos la dir de A (peso 2)
             
-            CAVLNode* B_ptr = (*A_ptrx2)->nodes[0];
+            CAVLNode* B_ptr = (*C_ptrx2)->nodes[0];
             CAVLNode* B_br = B_ptr->nodes[1];   //guardamos bl  , hijo izquierdo de B
    
-            *A_ptrx2 = B_ptr;        // Se apunta a B como sub root
+            *C_ptrx2 = B_ptr;        // Se apunta a B como sub root
              
             B_ptr->nodes[1] = tmp_C;
             tmp_C->nodes[0] = B_br; 
@@ -173,13 +177,13 @@ void CAVLTree::balanceo(std::stack<CAVLNode**> & estructura){
         
         else if (dif == 1 ){   //CASO  RL
         cout<<"         CASO R L   " <<endl; 
-            CAVLNode* tmp_C = *A_ptrx2;          //guardamos la dir de A (peso 2)
-            CAVLNode* tmp_A = (*A_ptrx2)->nodes[0]; 
-            CAVLNode* tmp_B = (*A_ptrx2)->nodes[0]->nodes[1]; 
+            CAVLNode* tmp_C = *C_ptrx2;          //guardamos la dir de A (peso 2)
+            CAVLNode* tmp_A = (*C_ptrx2)->nodes[0]; 
+            CAVLNode* tmp_B = (*C_ptrx2)->nodes[0]->nodes[1]; 
             CAVLNode* B_bl  = tmp_B->nodes[0] ; 
             CAVLNode* B_br  = tmp_B->nodes[1] ; 
             
-            *A_ptrx2 = tmp_B;
+            *C_ptrx2 = tmp_B;
             
             tmp_B->nodes[0] = tmp_A;
             tmp_B->nodes[1] = tmp_C;
@@ -320,5 +324,8 @@ int main()
     cout<< ab <<endl;
     bool ac = false;
     cout<< ac <<endl;
+    
+    t.InOrder(t.get_root());
+    
     
 }
