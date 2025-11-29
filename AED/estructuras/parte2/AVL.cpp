@@ -35,6 +35,21 @@ public:
     CAVLNode* get_root(){
         return m_root;
     }
+    inline int getBalance(CNode* n) {
+        return (n == nullptr ? 0 : getAltura(n->nodes[0]) - getAltura(n->nodes[1]));
+    }
+    inline int getAltura(CNode* n) {
+    return (n == nullptr ? 0 : n->altura);
+    }
+    
+    inline void updateAltura(CNode* n) {
+        if (n == nullptr) return;
+    
+        int ai = getAltura(n->nodes[0]);  // hijo izquierdo
+        int ad = getAltura(n->nodes[1]);  // hijo derecho
+    
+        n->altura = 1 + std::max(ai, ad);
+    }
 
 private:
 
